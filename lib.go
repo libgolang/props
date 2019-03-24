@@ -36,6 +36,11 @@ func IsSet(name string) bool {
 	return found
 }
 
+// Regurns any argument that is not a property name, flag or property value
+func GetArgs() []string {
+	return globalProps.args
+}
+
 func parseArgs(args []string) *propsStruct {
 	res := &propsStruct{
 		props: make(map[string]string),
