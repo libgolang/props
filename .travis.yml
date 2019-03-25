@@ -1,12 +1,15 @@
 sudo: required
 os:
 - linux
+
 services:
 - docker
 language: go
+
 go:
 - 1.12.x
 - 1.11.x
+
 jobs:
   include:
   - stage: build
@@ -18,7 +21,7 @@ jobs:
   - stage: deploy
     script: make deploy
     if: branch = master
-
+    
 env:
   global:
     secure: ArWyQA8FCKTVW9pKsgHbuy8ab0emUAT4LNMSITpnwf69pj4llmShpmiCy37+Jl2NA6R9cJKVJvg1Z+SXAJhJiAimJQXvTKq6TYn/2zczFGNLSXaR4DaG1gWNkj9A+7NKy/ICfut6Jp4v+vRH3qOSyTqcsJ7pSrcqexHRnf3nFyTJdbbjAnluMKD6nvS4KTpGKVAnnIhmoJKQgaHFkRkw9Z+7fvq2SCBCg5K4FNALlTP1pdNh0EjwymG3Aje73XlGbEArNfQLnWQZwZ+Wy9kt9JfntR+kge65g7XvAoVZQP/ezouxavoluhGNGYHeRq3i1JaKpgEymu02SXNkkKtYWcDn6PwQi+Y6IMMDp2jO9uihMeQ446jCCZjdoS+k9VWNvU84T01ni9D4JQVNzmmcSJ2Ch6pzswX6Z44NeYsOpoRhgUpqRYFz89GVC9dG1z7PwrWHwWSNu+hX3EAU4Q5NIavKWYKKx2kV9po9W5TayLOJsMR5/2PKUJgf1tHOAyK/c8HNXGBck6rlDMH7SvJsnDJCT9htJKVIZud83aC7js9cbWU4qvW06+c9APMgHUGdljSkzdwYTqQF7IhT+Dba2c/sdwah4kmeAKDX3lleZMCY0fCm2SzNaRSdU1vo3p17z/ao0UQhMu5tIHhIygzsV6DyAwsk5tjB9bFT4iLnKiU=
