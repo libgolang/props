@@ -1,3 +1,7 @@
+GHK ?= 'github-key'
+TRAVIS_BUILD_NUMBER ?= 2
+TRAVIS_COMMIT ?= $(shell git log --format=\%H -1)
+
 build:
 	go build
 
@@ -11,8 +15,11 @@ check: $(GOPATH)/bin/deadcode $(GOPATH)/bin/errcheck $(GOPATH)/bin/golint
 unit-test:
 	go test
 
-deploy: build
-	
+deploy:
+	$(eval VERSION = $(shell cat VERSION).$(TRAVIS_BUILD_NUMBER)+$(shell git log --format=%h -1))
+	@curl -H "Authorization: Bearer $(GHK)" \
+		-d '{ "tag_name": "$(VERSION)", "target_commitish": "$(TRAVIS_COMMIT)", "name": "$(VERSION)", "body": "Automatic Release of $(VERSION)", "draft": false, "prerelease": false }' \
+		"https://api.github.com/repos/libgolang/props/releases"
 
 $(GOPATH)/bin/deadcode:
 	go get -u github.com/tsenart/deadcode
