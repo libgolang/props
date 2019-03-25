@@ -30,7 +30,7 @@ func GetProp(name string) string {
 	return ""
 }
 
-// IsSet retuns true if property is set, otherwise it returns false
+// IsSet returns true if property is set, otherwise it returns false
 func IsSet(name string) bool {
 	_, found := globalProps.props[name]
 	return found
