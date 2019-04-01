@@ -19,7 +19,7 @@ unit-test:
 	go test
 
 deploy:
-	$(eval VERSION = v$(shell cat VERSION).$(TRAVIS_BUILD_NUMBER)-$(shell git log --format=%h -1))
+	$(eval VERSION = v$(shell cat VERSION).$(TRAVIS_BUILD_NUMBER))
 	@echo curl -d '{ "tag_name": "$(VERSION)", "target_commitish": "$(TRAVIS_COMMIT)", "name": "$(VERSION)", "body": "Automatic Release of $(VERSION)", "draft": false, "prerelease": false }'  "https://api.github.com/repos/$(SLUG)/releases"
 	@curl -f -H "Authorization: Bearer $(GHK)" -d '{ "tag_name": "$(VERSION)", "target_commitish": "$(TRAVIS_COMMIT)", "name": "$(VERSION)", "body": "Automatic Release of $(VERSION)", "draft": false, "prerelease": false }' "https://api.github.com/repos/$(SLUG)/releases"
 
