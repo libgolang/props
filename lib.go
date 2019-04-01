@@ -80,7 +80,8 @@ func parseArgs(args []string) *propsStruct {
 					res.props[arr[1]] = ""
 				}
 			} else {
-				// property is the last parameter, set to empty res.props[arr[1]] = ""
+				// property is the last parameter, set to empty
+				res.props[arr[1]] = ""
 			}
 		} else if arr := propFlagRegex.FindStringSubmatch(arg); arr != nil {
 			// flag -p, -a -x
