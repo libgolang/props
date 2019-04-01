@@ -3,6 +3,7 @@ package props
 import (
 	"os"
 	"regexp"
+	"strings"
 )
 
 type propsStruct struct {
@@ -27,7 +28,19 @@ func GetProp(name string) string {
 	if val, found := globalProps.props[name]; found {
 		return val
 	}
+
+	if val, found := os.LookupEnv(toEnvName(name)); found {
+		return val
+	}
+
 	return ""
+}
+
+func toEnvName(name string) string {
+	envName := strings.ToUpper(name)
+	envName = strings.Replace(envName, ".", "_", -1)
+	envName = strings.Replace(envName, "-", "_", -1)
+	return envName
 }
 
 // IsSet returns true if property is set, otherwise it returns false
@@ -36,7 +49,7 @@ func IsSet(name string) bool {
 	return found
 }
 
-// Regurns any argument that is not a property name, flag or property value
+// GetArgs regurns any argument that is not a property name, flag or property value
 func GetArgs() []string {
 	return globalProps.args
 }
@@ -67,8 +80,7 @@ func parseArgs(args []string) *propsStruct {
 					res.props[arr[1]] = ""
 				}
 			} else {
-				// property is the last parameter, set to empty
-				res.props[arr[1]] = ""
+				// property is the last parameter, set to empty res.props[arr[1]] = ""
 			}
 		} else if arr := propFlagRegex.FindStringSubmatch(arg); arr != nil {
 			// flag -p, -a -x
