@@ -2,6 +2,9 @@ GHK ?= 'github-key'
 TRAVIS_BUILD_NUMBER ?= 2
 TRAVIS_COMMIT ?= $(shell git log --format=\%H -1)
 
+SLUG=libgolang/props
+
+
 build:
 	go build
 
@@ -17,9 +20,8 @@ unit-test:
 
 deploy:
 	$(eval VERSION = v$(shell cat VERSION).$(TRAVIS_BUILD_NUMBER)-$(shell git log --format=%h -1))
-	@curl -H "Authorization: Bearer $(GHK)" \
-		-d '{ "tag_name": "$(VERSION)", "target_commitish": "$(TRAVIS_COMMIT)", "name": "$(VERSION)", "body": "Automatic Release of $(VERSION)", "draft": false, "prerelease": false }' \
-		"https://api.github.com/repos/libgolang/props/releases"
+	@echo curl -d '{ "tag_name": "$(VERSION)", "target_commitish": "$(TRAVIS_COMMIT)", "name": "$(VERSION)", "body": "Automatic Release of $(VERSION)", "draft": false, "prerelease": false }'  "https://api.github.com/repos/$(SLUG)/releases"
+	@curl -f -H "Authorization: Bearer $(GHK)" -d '{ "tag_name": "$(VERSION)", "target_commitish": "$(TRAVIS_COMMIT)", "name": "$(VERSION)", "body": "Automatic Release of $(VERSION)", "draft": false, "prerelease": false }' "https://api.github.com/repos/$(SLUG)/releases"
 
 $(GOPATH)/bin/deadcode:
 	go get -u github.com/tsenart/deadcode
