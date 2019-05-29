@@ -13,9 +13,9 @@ type propsStruct struct {
 
 var (
 	globalProps   *propsStruct
-	propEqRegex   = regexp.MustCompile(`--([\w\-]+)=(.*)$`)
-	propRegex     = regexp.MustCompile(`--([\w\-]+)`)
-	propFlagRegex = regexp.MustCompile(`-(\w+)`)
+	propEqRegex   = regexp.MustCompile(`^--([\w\-]+)=(.*)$`)
+	propRegex     = regexp.MustCompile(`^--([\w\-]+)`)
+	propFlagRegex = regexp.MustCompile(`^-(\w+)`)
 )
 
 func init() {

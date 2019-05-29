@@ -49,3 +49,36 @@ func TestGetProp(t *testing.T) {
 		}
 	}
 }
+
+func TestInvalidProps(t *testing.T) {
+	// given
+	args := []string{
+		"arg1",
+		"x-x",
+		"y-y",
+		"bool--bool",
+		"prop",
+		"prop-val",
+	}
+
+	// when
+	globalProps = parseArgs(args)
+
+	resultArgs := GetArgs()
+
+	// then
+	a := len(resultArgs)
+	b := len(args)
+	if a != b {
+		t.Errorf("Expected `%d` arguments, but got `%d`", b, a)
+	} else {
+		var i int = 0
+		for _, v := range args {
+			if v != resultArgs[i] {
+				t.Errorf("arg `%s` should match %s", v, resultArgs[i])
+			}
+			i++
+		}
+	}
+
+}
