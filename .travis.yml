@@ -19,8 +19,8 @@ jobs:
   - stage: unit-test
     script: make unit-test
   - stage: deploy
-    script: make deploy
     if: branch = master
+    script: make deploy
     
 env:
   global:

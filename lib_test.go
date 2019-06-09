@@ -72,13 +72,37 @@ func TestInvalidProps(t *testing.T) {
 	if a != b {
 		t.Errorf("Expected `%d` arguments, but got `%d`", b, a)
 	} else {
-		var i int = 0
+		var i int
 		for _, v := range args {
 			if v != resultArgs[i] {
 				t.Errorf("arg `%s` should match %s", v, resultArgs[i])
 			}
 			i++
 		}
+	}
+
+}
+
+func TestPropNames(t *testing.T) {
+	// given
+	args := []string{
+		"--prop-with-dashes=val1",
+		"--prop.with.periods=val2",
+		"--prop_with_underscores=val3",
+	}
+
+	// when
+	globalProps = parseArgs(args)
+
+	// then
+	if IsSet("prop-with-dashes") != true {
+		t.Error("Expected prop-with-dashes to be set")
+	}
+	if IsSet("prop.with.periods") != true {
+		t.Error("Expected prop.with.periods to be set")
+	}
+	if IsSet("prop_with_underscores") != true {
+		t.Errorf("Expected prop_with_underscores to be set `true`")
 	}
 
 }
